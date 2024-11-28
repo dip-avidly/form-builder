@@ -1,0 +1,407 @@
+// FormBuilder Unified Styles
+html {
+  overflow-y: auto !important;
+}
+
+// Variables
+$sidebar-width: 280px;
+$header-height: 63px;
+$border-color: #e9ecef;
+$background-light: #f8f9fa;
+$shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+$transition-standard: all 0.2s ease;
+
+// Mixins
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+}
+
+// Main Container
+.form-builder-container {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - $header-height);
+  position: relative;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+// Left Sidebar
+.left-sidebar {
+  min-width: 250px;
+  height: calc(100vh - $header-height - 2rem);
+  background-color: $background-light;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 1.5rem;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: $shadow-light;
+  @include custom-scrollbar;
+}
+
+// Main Content
+.main-content {
+  flex: 2;
+  padding: 2rem;
+  min-height: calc(100vh - $header-height - 2rem);
+  background-color: #ffffff;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: $shadow-light;
+  
+  .form-content {
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      
+      .form-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin: 0;
+      }
+      
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+
+    .form-builder-area {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid $border-color;
+      min-height: calc(100vh - 250px);
+      padding: 2rem;
+      box-shadow: $shadow-light;
+    }
+  }
+}
+
+// Tool Items
+.tool-item {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: $transition-standard;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-medium;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Form Layouts
+.created-form-layout,
+.new-form-layout {
+  max-width: 180px;
+  border-radius: 8px;
+  margin: 0.5rem;
+  transition: $transition-standard;
+  
+  div {
+    padding: 1rem;
+    transition: $transition-standard;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    
+    &:hover {
+      background-color: $background-light;
+      border-color: $border-color;
+      transform: translateY(-2px);
+      box-shadow: $shadow-light;
+    }
+    
+    &:active {
+      background-color: #e9ecef;
+      transform: translateY(0);
+    }
+  }
+}
+
+// Drag and Drop Containers
+.container-drop {
+  height: 100%;
+  transition: 0.3s;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding: 2rem 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: $shadow-light;
+}
+
+// Control Elements
+.control-drop {
+  transition: 0.3s;
+  padding: 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  
+  &:hover {
+    background-color: $background-light;
+    border-color: $border-color;
+  }
+}
+
+// Action Containers
+.container-actions,
+.control-actions {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 23;
+  transition: 0.2s;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+
+  span {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+// Control Input Triggers
+.control-input-trigger-buttons {
+  height: 120px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  border: 2px dashed rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: $background-light;
+  border-radius: 8px;
+  transition: $transition-standard;
+
+  &:hover {
+    border-color: #007bff;
+    background-color: #f0f7ff;
+    transform: translateY(-2px);
+  }
+
+  .sign-label {
+    letter-spacing: 3px;
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid;
+    padding: 20px 16px;
+  }
+}
+
+// Buttons
+.btn {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: $transition-standard;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Preview Drawer
+.drawer {
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  box-shadow: $shadow-medium;
+  z-index: 1000;
+  overflow-y: auto;
+  @include custom-scrollbar;
+  
+  @media (min-width: 768px) {
+    width: 80%;
+  }
+}
+
+.drawer-header {
+  padding: 1rem;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: $transition-standard;
+    
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+// Manage Items List
+.manage-items-list {
+  margin: 1rem 0;
+  
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    transition: $transition-standard;
+    
+    &:hover {
+      background-color: $background-light;
+    }
+    
+    .item-actions {
+      display: flex;
+      gap: 0.5rem;
+      
+      button {
+        background: none;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        transition: $transition-standard;
+        
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+  }
+  
+  .add-item-form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+      }
+    }
+  }
+}
+
+// Form Fields
+.form-field {
+  margin-bottom: 1.5rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: $transition-standard;
+    
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+    }
+    
+    &:disabled {
+      background-color: #f8f9fa;
+      cursor: not-allowed;
+    }
+  }
+  
+  .help-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+  }
+  
+  &.has-error {
+    input,
+    select,
+    textarea {
+      border-color: #dc3545;
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+      }
+    }
+    
+    .error-message {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  }
+}
