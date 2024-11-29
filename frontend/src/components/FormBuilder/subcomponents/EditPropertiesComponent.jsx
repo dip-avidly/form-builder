@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ManageItemsListComponent from "./ManageItemsListComponent";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
 import _ from "lodash";
-// import useModalStrip from "../../../global-hooks/useModalStrip";
 
 const textboxStyle = {
   minWidth: "100%",
@@ -31,8 +21,6 @@ const EditPropertiesComponent = ({
   const [isUpdatedItemRequired, setIsUpdatedItemRequired] = useState(false);
   const [moveControlObj, setMoveControlObj] = useState(null);
   const [controlsInContainer, setControlsInContainer] = useState(undefined);
-
-  // const { showModalStrip } = useModalStrip();
 
   useEffect(() => {
     if (selectedControl) {
@@ -114,20 +102,11 @@ const EditPropertiesComponent = ({
   const getPositions = () => {
     return controlsInContainer !== undefined
       ? Array.from({ length: controlsInContainer + 1 }, (_, index) => (
-          <MenuItem key={index} value={index}>
+          <option key={index} value={index}>
             {index + 1}
-          </MenuItem>
+          </option>
         ))
       : null;
-  };
-
-  const onMoveControlFormSubmit = (e) => {
-    e.preventDefault();
-    // if (!moveControlObj?.containerId) {
-    //   showModalStrip("danger", "You need to select Step first", 5000);
-    //   return;
-    // }
-    moveControlFromSide(selectedControl, moveControlObj);
   };
 
   return (
@@ -142,22 +121,28 @@ const EditPropertiesComponent = ({
               >
                 <div className="main-form-title">Edit Container Properties</div>
                 <div>
-                  <TextField
-                    label="Container Heading"
-                    name="heading"
-                    value={updatedItem.heading || ""}
-                    onChange={handleChange}
-                    style={textboxStyle}
-                  />
+                  <label>
+                    Container Heading:
+                    <input
+                      type="text"
+                      name="heading"
+                      value={updatedItem.heading || ""}
+                      onChange={handleChange}
+                      style={textboxStyle}
+                    />
+                  </label>
                 </div>
                 <div>
-                  <TextField
-                    label="Container Sub-Heading"
-                    name="subHeading"
-                    value={updatedItem.subHeading || ""}
-                    onChange={handleChange}
-                    style={textboxStyle}
-                  />
+                  <label>
+                    Container Sub-Heading:
+                    <input
+                      type="text"
+                      name="subHeading"
+                      value={updatedItem.subHeading || ""}
+                      onChange={handleChange}
+                      style={textboxStyle}
+                    />
+                  </label>
                 </div>
                 <input
                   type="submit"
@@ -178,48 +163,54 @@ const EditPropertiesComponent = ({
                 <form onSubmit={onFormSubmit} style={{ minWidth: "100%" }}>
                   <div className="main-form-title">Edit Field Properties</div>
                   <div>
-                    <TextField
-                      label="Field Label Name"
-                      name="labelName"
-                      value={updatedItem.labelName || ""}
-                      onChange={handleChange}
-                      style={textboxStyle}
-                    />
+                    <label>
+                      Field Label Name:
+                      <input
+                        type="text"
+                        name="labelName"
+                        value={updatedItem.labelName || ""}
+                        onChange={handleChange}
+                        style={textboxStyle}
+                      />
+                    </label>
                   </div>
                   {["INPUTTEXTFIELD", "INPUTMULTILINE", "CHECKBOX"].includes(
                     selectedControl.controlName
                   ) && (
                     <div>
-                      <TextField
-                        label="Field Placeholder"
-                        name="placeholder"
-                        value={updatedItem.placeholder || ""}
-                        onChange={handleChange}
-                        style={textboxStyle}
-                      />
+                      <label>
+                        Field Placeholder:
+                        <input
+                          type="text"
+                          name="placeholder"
+                          value={updatedItem.placeholder || ""}
+                          onChange={handleChange}
+                          style={textboxStyle}
+                        />
+                      </label>
                     </div>
                   )}
                   <div>
-                    <TextField
-                      label="Field Description"
-                      name="description"
-                      value={updatedItem.description || ""}
-                      onChange={handleChange}
-                      multiline
-                      style={textboxStyle}
-                    />
+                    <label>
+                      Field Description:
+                      <textarea
+                        name="description"
+                        value={updatedItem.description || ""}
+                        onChange={handleChange}
+                        style={textboxStyle}
+                      />
+                    </label>
                   </div>
                   <div className="m-t-20 p-l-0">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isUpdatedItemRequired}
-                          name="required"
-                          onChange={handleCheckChange}
-                        />
-                      }
-                      label="Required"
-                    />
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={isUpdatedItemRequired}
+                        name="required"
+                        onChange={handleCheckChange}
+                      />
+                      Required
+                    </label>
                   </div>
                   {["RADIOGROUP", "SELECTDROPDOWN", "CHECKLIST"].includes(
                     selectedControl.controlName
@@ -248,56 +239,6 @@ const EditPropertiesComponent = ({
                 </form>
               </div>
               <div className="m-t-20"></div>
-              {/* <div className="main-form">
-                <form
-                  onSubmit={onMoveControlFormSubmit}
-                  style={{ minWidth: "100%" }}
-                >
-                  <div className="main-form-title">Move Control to Step</div>
-                  <div>
-                    <FormControl style={{ minWidth: "100%" }}>
-                      <InputLabel>Step:</InputLabel>
-                      <Select
-                        name="containerId"
-                        value={moveControlObj?.containerId || ""}
-                        onChange={handleMoveControlSelectChange}
-                      >
-                        {formLayoutComponents.map((item, index) => (
-                          <MenuItem
-                            key={item.container.id}
-                            value={item.container.id}
-                          >
-                            Step {index + 1}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div>
-                    <FormControl style={{ minWidth: "100%" }}>
-                      <InputLabel>Position:</InputLabel>
-                      <Select
-                        name="position"
-                        value={moveControlObj?.position || ""}
-                        onChange={handleMoveControlSelectChange}
-                      >
-                        {getPositions()}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <input
-                    type="submit"
-                    value="Move"
-                    className="btn btn-light btn-shadow m-t-20 m-r-10"
-                  />
-                  <input
-                    type="button"
-                    value="Cancel"
-                    className="btn btn-light btn-shadow m-t-20 m-l-0"
-                    onClick={() => selectControl(undefined)}
-                  />
-                </form>
-              </div> */}
             </>
           )}
         </>

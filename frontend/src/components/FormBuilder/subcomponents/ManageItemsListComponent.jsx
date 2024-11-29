@@ -1,13 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  TextField,
-} from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import { generateID } from "../../../utils/common";
 
 const ManageItemsListComponent = ({
@@ -60,44 +51,61 @@ const ManageItemsListComponent = ({
   return (
     <div>
       {/* Input for adding or editing item */}
-      <TextField
-        label="Item Name"
+      <input
+        type="text"
+        placeholder="Item Name"
         name="newItem"
         value={itemName}
         onChange={handleChange}
-        style={{ minWidth: "100%" }}
+        className="input"
+        style={{ width: "100%", marginBottom: "10px" }}
       />
-      <input
-        className="btn btn-light btn-shadow m-t-20 m-r-10"
-        value={editMode ? "Edit Item" : "Add Item"}
-        type="button"
+      <button
+        className="btn btn-light btn-shadow m-t-10 m-r-10"
         onClick={onSubmit}
-      />
+      >
+        {editMode ? "Edit Item" : "Add Item"}
+      </button>
       {editMode && (
-        <input
-          className="btn btn-light btn-shadow m-t-20 m-r-10"
-          value="Cancel"
-          type="button"
+        <button
+          className="btn btn-light btn-shadow m-t-10 m-r-10"
           onClick={cancelEditing}
-        />
+        >
+          Cancel
+        </button>
       )}
 
       {/* List of existing items */}
-      <List component="nav">
+      <ul className="list">
         {items?.map((item) => (
-          <ListItem key={item.value}>
-            <ListItemText primary={item.label} />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" onClick={() => changeToEditMode(item)}>
-                <Edit />
-              </IconButton>
-              <IconButton onClick={() => deleteItemFromList(item)} edge="end">
-                <Delete />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <li
+            key={item.value}
+            className="list-item"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "8px",
+            }}
+          >
+            <span>{item.label}</span>
+            <div>
+              <button
+                className="btn btn-edit m-r-5"
+                onClick={() => changeToEditMode(item)}
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-delete"
+                onClick={() => deleteItemFromList(item)}
+              >
+                Delete
+              </button>
+            </div>
+          </li>
         ))}
-      </List>
+      </ul>
     </div>
   );
 };
