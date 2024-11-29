@@ -71,12 +71,6 @@ const FormBuilder = (props) => {
                       >
                         Preview
                       </button>
-                      {/* <button
-                        onClick={publishForm}
-                        className="btn btn-primary"
-                      >
-                        <Publish /> Publish
-                      </button> */}
                     </div>
                   </div>
                   <div
@@ -86,7 +80,7 @@ const FormBuilder = (props) => {
                       height: "calc(100vh - 180px)",
                     }}
                   >
-                    <div className="row mb-5">
+                    <div className="row mb-5 AllLayout">
                       {formLayoutComponents.map((layout, ind) => {
                         return (
                           <DropContainerComponent
@@ -104,7 +98,7 @@ const FormBuilder = (props) => {
                         );
                       })}
                     </div>
-                    <div className="row mb-5">
+                    <div className="row mb-5 NewStep">
                       <DropContainerComponent
                         accept={FormItemTypes.CONTAINER}
                         name={"Parent Component"}

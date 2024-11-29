@@ -17,11 +17,11 @@ $transition-standard: all 0.2s ease;
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 3px;
@@ -62,25 +62,25 @@ $transition-standard: all 0.2s ease;
   border: 1px solid $border-color;
   border-radius: 8px;
   box-shadow: $shadow-light;
-  
+
   .form-content {
     width: 100%;
     height: 100%;
     padding: 1.5rem;
-    
+
     .content-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 2rem;
-      
+
       .form-title {
         font-size: 1.5rem;
         font-weight: 600;
         color: #2d3748;
         margin: 0;
       }
-      
+
       .action-buttons {
         display: flex;
         gap: 1rem;
@@ -107,44 +107,43 @@ $transition-standard: all 0.2s ease;
   border-radius: 6px;
   cursor: pointer;
   transition: $transition-standard;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: $shadow-medium;
   }
-  
+
   &:active {
     transform: translateY(0);
   }
 }
 
 // Form Layouts
-.created-form-layout,
-.new-form-layout {
-  max-width: 180px;
-  border-radius: 8px;
-  margin: 0.5rem;
-  transition: $transition-standard;
-  
-  div {
-    padding: 1rem;
-    transition: $transition-standard;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    
-    &:hover {
-      background-color: $background-light;
-      border-color: $border-color;
-      transform: translateY(-2px);
-      box-shadow: $shadow-light;
-    }
-    
-    &:active {
-      background-color: #e9ecef;
-      transform: translateY(0);
-    }
-  }
-}
+// .created-form-layout {
+//   max-width: 180px;
+//   border-radius: 8px;
+//   margin: 0.5rem;
+//   transition: $transition-standard;
+
+//   div {
+//     padding: 1rem;
+//     transition: $transition-standard;
+//     border-radius: 8px;
+//     border: 1px solid transparent;
+
+//     // &:hover {
+//     //   background-color: $background-light;
+//     //   border-color: $border-color;
+//     //   transform: translateY(-2px);
+//     //   box-shadow: $shadow-light;
+//     // }
+
+//     // &:active {
+//     //   background-color: #e9ecef;
+//     //   transform: translateY(0);
+//     // }
+//   }
+// }
 
 // Drag and Drop Containers
 .container-drop {
@@ -164,7 +163,7 @@ $transition-standard: all 0.2s ease;
   padding: 1rem;
   border: 1px solid transparent;
   border-radius: 6px;
-  
+
   &:hover {
     background-color: $background-light;
     border-color: $border-color;
@@ -235,7 +234,7 @@ $transition-standard: all 0.2s ease;
   cursor: pointer;
   border-radius: 4px;
   transition: $transition-standard;
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
@@ -245,12 +244,12 @@ $transition-standard: all 0.2s ease;
 .btn-primary {
   background-color: #007bff;
   color: white;
-  
+
   &:hover {
     background-color: #0056b3;
     transform: translateY(-1px);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
@@ -265,7 +264,7 @@ $transition-standard: all 0.2s ease;
   z-index: 1000;
   overflow-y: auto;
   @include custom-scrollbar;
-  
+
   @media (min-width: 768px) {
     width: 80%;
   }
@@ -277,14 +276,14 @@ $transition-standard: all 0.2s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   .close-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
     transition: $transition-standard;
-    
+
     &:hover {
       opacity: 0.7;
     }
@@ -294,7 +293,7 @@ $transition-standard: all 0.2s ease;
 // Manage Items List
 .manage-items-list {
   margin: 1rem 0;
-  
+
   .item {
     display: flex;
     align-items: center;
@@ -305,40 +304,40 @@ $transition-standard: all 0.2s ease;
     border: 1px solid $border-color;
     border-radius: 4px;
     transition: $transition-standard;
-    
+
     &:hover {
       background-color: $background-light;
     }
-    
+
     .item-actions {
       display: flex;
       gap: 0.5rem;
-      
+
       button {
         background: none;
         border: none;
         padding: 0.25rem 0.5rem;
         cursor: pointer;
         transition: $transition-standard;
-        
+
         &:hover {
           color: #007bff;
         }
       }
     }
   }
-  
+
   .add-item-form {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
-    
+
     input {
       flex: 1;
       padding: 0.5rem;
       border: 1px solid $border-color;
       border-radius: 4px;
-      
+
       &:focus {
         outline: none;
         border-color: #007bff;
@@ -351,14 +350,14 @@ $transition-standard: all 0.2s ease;
 // Form Fields
 .form-field {
   margin-bottom: 1.5rem;
-  
+
   label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
     color: #2c3e50;
   }
-  
+
   input,
   select,
   textarea {
@@ -368,36 +367,36 @@ $transition-standard: all 0.2s ease;
     border-radius: 4px;
     background-color: #fff;
     transition: $transition-standard;
-    
+
     &:focus {
       outline: none;
       border-color: #007bff;
       box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
     }
-    
+
     &:disabled {
       background-color: #f8f9fa;
       cursor: not-allowed;
     }
   }
-  
+
   .help-text {
     font-size: 0.875rem;
     color: #6c757d;
     margin-top: 0.25rem;
   }
-  
+
   &.has-error {
     input,
     select,
     textarea {
       border-color: #dc3545;
-      
+
       &:focus {
         box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
       }
     }
-    
+
     .error-message {
       color: #dc3545;
       font-size: 0.875rem;

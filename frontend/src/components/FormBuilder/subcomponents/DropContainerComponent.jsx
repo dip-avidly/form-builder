@@ -4,7 +4,6 @@ import {
   FormContainerList,
   FormItemTypes,
 } from "../../../utils/formBuilderUtils";
-// import { Button } from '@mui/material';
 import ControlViewComponent from "./ControlViewComponent";
 import "../unified-styles.scss";
 
@@ -37,17 +36,17 @@ const DropContainerComponent = (props) => {
       ? "rgba(0,0,0,0)"
       : "rgba(0,0,0,0.1)";
   let borderColor = "rgba(0,0,0,0.1)";
-  const borderBase = "1px solid";
-  let border;
+  // const borderBase = "1px solid";
+  // let border;
   if (isActive) {
     backgroundColor = "rgba(46,212,182,0.4)";
   } else if (canDrop) {
     backgroundColor = "rgba(255,178,15,0.7)";
   }
 
-  if (accept === FormItemTypes.CONTROL) {
-    border = borderBase + " " + borderColor;
-  }
+  // if (accept === FormItemTypes.CONTROL) {
+  //   border = borderBase + " " + borderColor;
+  // }
 
   // Change border Color
   if (
@@ -56,15 +55,15 @@ const DropContainerComponent = (props) => {
     selectedControl.id === layout.id
   ) {
     borderColor = "rgb(255, 193, 7)";
-    border = borderBase + " " + borderColor;
   }
 
   const handleDeleteContainer = (event) => {
     if (deleteContainer) {
       deleteContainer(layout?.id);
     }
-    // event.cancelBubble = true;
-    if (event.stopPropagation) event.stopPropagation();
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    }
   };
 
   return (
@@ -72,7 +71,11 @@ const DropContainerComponent = (props) => {
       <div
         className="col-12 container-drop"
         ref={drop}
-        style={{ backgroundColor, borderRadius: "9px", border }}
+        style={{
+          backgroundColor,
+          borderRadius: "10px",
+          border: "1px solid rgba(0,0,0,0.1)",
+        }}
       >
         {accept === FormItemTypes.CONTAINER ? (
           <>
@@ -105,12 +108,7 @@ const DropContainerComponent = (props) => {
                 }
               }}
               className="container-header d-flex justify-content-between py-3 mb-3"
-              style={{
-                borderBottom: "1px solid rgba(0,0,0,0.1)",
-                cursor: "pointer",
-              }}
             >
-              <h5>Section {index + 1}</h5>
               <div className="container-actions" style={{ fontSize: "1.1rem" }}>
                 <span onClick={handleDeleteContainer}>delete</span>
               </div>
@@ -171,12 +169,6 @@ const DropContainerComponent = (props) => {
                 </>
               )}
             </div>
-            {/* <div className='container-actions' style={{backgroundColor: borderColor}}>
-          <span onClick={()=>selectControl(layout)}><i className='fa fa-pen'></i></span>
-          <span><i className='fa fa-arrow-up'></i></span>
-          <span><i className='fa fa-arrow-down'></i></span>
-          <span onClick={()=>deleteContainer(layout.id)}><i className='fa fa-trash'></i></span>
-        </div> */}
           </>
         ) : null}
       </div>

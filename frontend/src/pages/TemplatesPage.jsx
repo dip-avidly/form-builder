@@ -66,10 +66,8 @@ const TemplatesPage = () => {
                 key={template.id}
                 template={template}
                 createdFormLayout={true}
+                template_id={template?.id}
               />
-              <div onClick={() => navigate(`/${template?.id}/formpreview`)}>
-                Preview
-              </div>
             </>
           ))}
         </div>

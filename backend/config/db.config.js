@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      "mongodb://localhost:27017/form-builder"
+      "mongodb+srv://demouser:TsX27HjjnlnMQMcl@demo-project.nis5m.mongodb.net/?retryWrites=true&w=majority&appName=demo-project"
     );
     console.log(`MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
