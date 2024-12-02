@@ -41,7 +41,7 @@ const RenderItem = (props) => {
       return <ImageUpload {...props} />;
 
     case FormControlNames.TOGGLE:
-      return <Toggle />;
+      return <Toggle {...props} />;
 
     case FormControlNames.CHECKLIST:
       return (
@@ -50,22 +50,23 @@ const RenderItem = (props) => {
             <label key={i.value}>
               <input
                 type="checkbox"
-                checked={value?.includes(i.value)}
-                onChange={(e) =>
-                  onChange(
-                    item.id,
-                    e.target.checked
-                      ? [...(value || []), i.value]
-                      : value.filter((v) => v !== i.value)
-                  )
-                }
+                checked={(value || "").split(",").includes(i.value)} // Split the string to check if the value is selected
+                onChange={(e) => {
+                  const currentValues = (value || "").split(","); // Convert the string to an array
+                  const updatedValues = e.target.checked
+                    ? [...currentValues, i.value] // Add the new value if checked
+                    : currentValues.filter((v) => v !== i.value); // Remove the value if unchecked
+                  onChange(item.id, updatedValues.join(",")); // Convert the array back to a comma-separated string
+                }}
               />
               {i.label}
             </label>
           ))}
+          {error && (
+            <div style={{ color: "red", fontSize: "12px" }}>{error}</div>
+          )}
         </div>
       );
-
     case FormControlNames.SIGNATURE:
       return (
         <div>

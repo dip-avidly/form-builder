@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Toggle = ({ item, value, onChange }) => {
+export const Toggle = ({ item, value, onChange, error }) => {
   return (
     <div>
       <label style={{ display: "inline-flex", alignItems: "center" }}>
@@ -47,8 +47,9 @@ export const Toggle = ({ item, value, onChange }) => {
             }}
           />
         </div>
-        <span style={{ marginLeft: "10px" }}>{item.placeholder}</span>
+        <span style={{ marginLeft: "10px" }}>{item?.placeholder}</span>
       </label>
+      {error && <div style={{ color: "red", fontSize: "12px" }}>{error}</div>}
     </div>
   );
 };

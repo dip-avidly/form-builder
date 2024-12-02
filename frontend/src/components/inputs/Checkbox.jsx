@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Checkbox = ({ item, value, onChange }) => {
+export const Checkbox = ({ item, value, onChange, error }) => {
   return (
     <div style={{ margin: "10px 0" }}>
       <label>
@@ -11,6 +11,7 @@ export const Checkbox = ({ item, value, onChange }) => {
         />
         {item.placeholder}
       </label>
+      {error && <div style={{ color: "red", fontSize: "12px" }}>{error}</div>}
     </div>
   );
 };
