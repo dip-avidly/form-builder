@@ -119,6 +119,9 @@ const RenderItem = (props) => {
     case FormControlNames.VERIFIEDID:
       return <div>Verified ID Component Placeholder</div>;
 
+    case FormControlNames.HTML:
+      return <p></p>;
+
     default:
       return <div>Unknown Component</div>;
   }

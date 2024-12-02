@@ -26,7 +26,16 @@ const StepperFormPreview = (props) => {
 
     formLayoutComponents.forEach((step) => {
       step.children.forEach((field) => {
-        const { dataType, required, labelName, id, min, max } = field;
+        const {
+          dataType,
+          required,
+          labelName,
+          id,
+          min,
+          max,
+          maxFile,
+          maxSize,
+        } = field;
 
         // Initialize the base validation rule
         let validationRule;
@@ -60,7 +69,27 @@ const StepperFormPreview = (props) => {
               );
             }
             break;
-
+          case "file":
+            validationRule = Yup.array()
+              .compact() // Remove falsy values
+              .test(
+                "fileCount",
+                `You can upload a maximum of ${maxFile} files.`,
+                (value) => {
+                  if (!value) return true; // No files selected, skip the check
+                  return value.length <= (maxFile || 1); // Ensure file count doesn't exceed maxFile
+                }
+              )
+              .test(
+                "fileSize",
+                `Each file must be smaller than ${maxSize || 5} MB.`,
+                (value) => {
+                  if (!value) return true; // No files selected, skip the check
+                  const maxSizeInBytes = (maxSize || 5) * 1024 * 1024; // Default to 5MB
+                  return value.every((file) => file.size <= maxSizeInBytes);
+                }
+              );
+            break;
           case "string":
           default:
             validationRule = Yup.string().nullable();

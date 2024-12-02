@@ -7,7 +7,7 @@ export const ImageUpload = ({ item, onChange }) => {
         type="file"
         accept="image/*"
         id={item.controlName + item.id}
-        style={{ display: "none" }}
+        style={{}}
         onChange={(e) => onChange(item.id, e.target.files[0])}
       />
       <label htmlFor={item.controlName + item.id}>

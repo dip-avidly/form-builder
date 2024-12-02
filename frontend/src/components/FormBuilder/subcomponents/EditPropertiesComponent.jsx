@@ -292,6 +292,35 @@ const EditPropertiesComponent = ({
                       </div>
                     </>
                   )}
+                  {["FILEUPLOAD"].includes(selectedControl.controlName) && (
+                    <>
+                      <div>
+                        <label>
+                          Max file allowence :
+                          <input
+                            type="number"
+                            name="maxFile"
+                            value={updatedItem?.maxFile || 1}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                            min={1}
+                            max={10}
+                            defaultValue={updatedItem?.maxFile || 1}
+                          />
+                          Max size allowence :
+                          <input
+                            type="number"
+                            name="maxSize"
+                            value={updatedItem?.maxSize || 2}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                            max={10}
+                            defaultValue={updatedItem?.maxSize || 2}
+                          />
+                        </label>
+                      </div>
+                    </>
+                  )}
                   {/* Width */}
                   <div>
                     <label>

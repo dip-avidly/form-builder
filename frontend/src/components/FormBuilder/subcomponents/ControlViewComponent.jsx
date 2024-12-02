@@ -223,6 +223,9 @@ const renderItem = (item) => {
         </div>
       );
 
+    case FormControlNames.HTML:
+      return <></>;
+
     default:
       return <div style={{ color: "red" }}>Unknown Control</div>;
   }
