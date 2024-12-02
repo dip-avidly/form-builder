@@ -1,211 +1,68 @@
 import React from "react";
 import { FormControlNames } from "../../../../utils/formBuilderUtils";
 import SignatureCanvas from "react-signature-canvas";
-const RenderItem = ({ item, value, onChange, error }) => {
-  console.log("============", error);
+import { TextField } from "../../../inputs/TextField";
+import { MultilineField } from "../../../inputs/MultilineField";
+import { Checkbox } from "../../../inputs/Checkbox";
+import { RadioGroup } from "../../../inputs/RadioGroup";
+import { SelectDropdown } from "../../../inputs/SelectDropdown";
+import { DateField } from "../../../inputs/DateField";
+import { TimeField } from "../../../inputs/TimeField";
+import { FileUpload } from "../../../inputs/FileUpload";
+import { ImageUpload } from "../../../inputs/ImageUpload";
+import { Toggle } from "../../../inputs/Toggle";
+const RenderItem = (props) => {
+  const { item, value, onChange, error } = props;
+  console.log('asdasdaerror 123 123123 1: ', error);
+  console.log('item.controlName: ', item.controlName);
   switch (item.controlName) {
     case FormControlNames.INPUTTEXTFIELD:
       return (
-        <div>
-          <input
-            type={item.dataType || "text"}
-            placeholder={item.placeholder}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: `1px solid ${error ? "red" : "#ccc"}`,
-              borderRadius: "4px",
-            }}
-            value={value || ""}
-            onChange={(e) => onChange(item.id, e.target.value)}
-          />
-          {error && (
-            <div style={{ color: "red", fontSize: "12px" }}>{error}</div>
-          )}
-        </div>
+        <TextField {...props} />
       );
 
     case FormControlNames.INPUTMULTILINE:
       return (
-        <div>
-          <textarea
-            placeholder={item.placeholder}
-            rows={item.rows || 3}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: `1px solid ${error ? "red" : "#ccc"}`,
-              borderRadius: "4px",
-            }}
-            value={value || ""}
-            onChange={(e) => onChange(item.id, e.target.value)}
-          />
-          {error && (
-            <div style={{ color: "red", fontSize: "12px" }}>{error}</div>
-          )}
-        </div>
+        <MultilineField {...props} />
       );
 
     case FormControlNames.CHECKBOX:
       return (
-        <div style={{ margin: "10px 0" }}>
-          <label>
-            <input
-              type="checkbox"
-              checked={value || false}
-              onChange={(e) => onChange(item.id, e.target.checked)}
-            />
-            {item.placeholder}
-          </label>
-        </div>
+        <Checkbox {...props} />
       );
 
     case FormControlNames.RADIOGROUP:
       return (
-        <div>
-          {item.items?.map((i) => (
-            <label key={i.value} style={{ marginRight: "10px" }}>
-              <input
-                type="radio"
-                name={item.controlName + item.id}
-                value={i.value}
-                checked={value === i.value}
-                onChange={(e) => onChange(item.id, e.target.value)}
-              />
-              {i.label}
-            </label>
-          ))}
-          {error && (
-            <div style={{ color: "red", fontSize: "12px" }}>{error}</div>
-          )}
-        </div>
+        <RadioGroup {...props} />
       );
 
     case FormControlNames.SELECTDROPDOWN:
       return (
-        <div>
-          <select
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            value={value || ""}
-            onChange={(e) => onChange(item.id, e.target.value)}
-          >
-            {item.items?.map((i) => (
-              <option key={i.value} value={i.value}>
-                {i.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <SelectDropdown {...props} />
       );
 
     case FormControlNames.DATEFIELD:
       return (
-        <div>
-          <input
-            type="date"
-            value={value || ""}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            onChange={(e) => onChange(item.id, e.target.value)}
-          />
-        </div>
+        <DateField {...props} />
       );
 
     case FormControlNames.TIMEFIELD:
       return (
-        <div>
-          <input
-            type="time"
-            value={value || ""}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-            }}
-            onChange={(e) => onChange(item.id, e.target.value)}
-          />
-        </div>
+        <TimeField {...props} />
       );
 
     case FormControlNames.FILEUPLOAD:
       return (
-        <div>
-          <input
-            type="file"
-            id={item.controlName + item.id}
-            style={{ display: "none" }}
-            onChange={(e) => onChange(item.id, e.target.files[0])}
-          />
-          <label
-            htmlFor={item.controlName + item.id}
-            style={{
-              display: "inline-block",
-              padding: "10px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            {item.controlName === FormControlNames.IMAGEUPLOAD ? (
-              <i className="far fa-image"></i>
-            ) : (
-              <i className="fas fa-cloud-upload-alt"></i>
-            )}
-          </label>
-        </div>
+        <FileUpload {...props} />
       );
     case FormControlNames.IMAGEUPLOAD:
       return (
-        <div>
-          <input
-            type="file"
-            id={item.controlName + item.id}
-            style={{ display: "none" }}
-            onChange={(e) => onChange(item.id, e.target.files[0])}
-          />
-          <label
-            htmlFor={item.controlName + item.id}
-            style={{
-              display: "inline-block",
-              padding: "10px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            {item.controlName === FormControlNames.IMAGEUPLOAD ? (
-              <i className="far fa-image"></i>
-            ) : (
-              <i className="fas fa-cloud-upload-alt"></i>
-            )}
-          </label>
-        </div>
+        <ImageUpload {...props} />
       );
 
     case FormControlNames.TOGGLE:
       return (
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={value || false}
-              onChange={(e) => onChange(item.id, e.target.checked)}
-            />
-            <span style={{ marginLeft: "8px" }}>{item.placeholder}</span>
-          </label>
-        </div>
+        <Toggle />
       );
 
     case FormControlNames.CHECKLIST:
@@ -232,17 +89,6 @@ const RenderItem = ({ item, value, onChange, error }) => {
       );
 
     case FormControlNames.SIGNATURE:
-      // useEffect(() => {
-      //   // Check if value is provided and the signatureRef is set
-      //   if (value && item.signatureRef && item.signatureRef._sigPad) {
-      //     const img = new Image();
-      //     img.src = value;
-      //     img.onload = () => {
-      //       item.signatureRef._sigPad.fromDataURL(value); // Load base64 data if available
-      //     };
-      //   }
-      // }, [value, item.signatureRef]); // Re-run if value or signatureRef changes
-
       return (
         <div>
           <SignatureCanvas

@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import RenderItem from "./RenderItem";
 import "../../form-preview.scss";
 import axios from "axios";
@@ -21,21 +22,30 @@ const StepperFormPreview = (props) => {
   const { formLayoutComponents, screenType, defaultValues, formId } = props;
 
   const initialValues = { ...defaultValues }; // Populate default values based on the response object
-
-  const validateForm = (values) => {
-    const newErrors = {};
+  const generateValidationSchema = (formLayoutComponents) => {
+    const schema = {};
 
     formLayoutComponents.forEach((step) => {
       step.children.forEach((field) => {
-        if (
-          field.required &&
-          (!values[field.id] || values[field.id].trim() === "")
-        ) {
-          newErrors[field.id] = `${field.labelName} is required`;
+        if (field.required) {
+          schema[field.id] = Yup.string()
+            .trim()
+            .required(`${field.labelName} is required`);
+        } else if (field.type === 'email') {
+          schema[field.id] = Yup.string()
+            .email('Invalid email address')
+            .nullable();
+        } else if (field.type === 'number') {
+          schema[field.id] = Yup.number()
+            .typeError(`${field.labelName} must be a number`)
+            .nullable();
+        } else {
+          schema[field.id] = Yup.string().nullable();
         }
       });
     });
-    return newErrors;
+
+    return Yup.object().shape(schema);
   };
 
   const handleSubmit = async (value) => {
@@ -45,6 +55,9 @@ const StepperFormPreview = (props) => {
   };
 
   const isMobile = screenType === "mobile";
+
+  const validationSchema = generateValidationSchema(formLayoutComponents); // Generate the schema dynamically
+
 
   return (
     <>
@@ -60,7 +73,7 @@ const StepperFormPreview = (props) => {
             <div className="main-form">
               <Formik
                 initialValues={initialValues}
-                validate={(values) => validateForm(values)}
+                validationSchema={validationSchema} // Use the generated Yup validation schema here
                 onSubmit={handleSubmit}
               >
                 {({
@@ -70,10 +83,9 @@ const StepperFormPreview = (props) => {
                   handleChange,
                   handleBlur,
                   handleSubmit,
-                  isValidating,
                   isSubmitting,
                 }) => {
-                  console.log("isSubmitting: ", isSubmitting, isValidating);
+                  console.log('errors: ', errors);
                   return (
                     <form onSubmit={handleSubmit} style={{ minWidth: "100%" }}>
                       {formLayoutComponents.map((component, index) => (
@@ -137,6 +149,7 @@ const StepperFormPreview = (props) => {
                           type="submit"
                           className="btn btn-primary btn-shadow m-t-20 m-r-10"
                           value="Submit"
+                          disabled={isSubmitting} // Disable submit button while submitting
                         />
                       </div>
                     </form>

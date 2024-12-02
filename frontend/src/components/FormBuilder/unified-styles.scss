@@ -170,10 +170,25 @@ $transition-standard: all 0.2s ease;
   }
 }
 
+.control-wrapper {
+  .control-header {
+    display: flex;
+    align-items: center;
+
+    h5 {
+      width: 100%;
+      padding-right: 15px;
+    }
+
+    .control-actions {
+      flex-shrink: 0;
+    }
+  }
+}
+
 // Action Containers
 .container-actions,
 .control-actions {
-  position: absolute;
   right: 0.5rem;
   top: 0.5rem;
   z-index: 23;
@@ -387,6 +402,7 @@ $transition-standard: all 0.2s ease;
   }
 
   &.has-error {
+
     input,
     select,
     textarea {
