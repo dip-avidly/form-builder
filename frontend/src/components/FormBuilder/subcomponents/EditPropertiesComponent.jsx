@@ -161,7 +161,8 @@ const EditPropertiesComponent = ({
             <>
               <div className="main-form">
                 <form onSubmit={onFormSubmit} style={{ minWidth: "100%" }}>
-                  <div className="main-form-title">Edit Field Properties</div>
+                  <p className="main-form-title">Edit Field Properties</p>
+                  {/* Edit Label  */}
                   <div>
                     <label>
                       Field Label Name:
@@ -174,6 +175,31 @@ const EditPropertiesComponent = ({
                       />
                     </label>
                   </div>
+                  {/* Description */}
+                  <div>
+                    <label>
+                      Field Description:
+                      <textarea
+                        name="description"
+                        value={updatedItem.description || ""}
+                        onChange={handleChange}
+                        style={textboxStyle}
+                      />
+                    </label>
+                  </div>
+                  {/* Required */}
+                  <div className="m-t-20 p-l-0">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={isUpdatedItemRequired}
+                        name="required"
+                        onChange={handleCheckChange}
+                      />
+                      Required
+                    </label>
+                  </div>
+                  {/* Placeholder */}
                   {["INPUTTEXTFIELD", "INPUTMULTILINE", "CHECKBOX"].includes(
                     selectedControl.controlName
                   ) && (
@@ -190,28 +216,9 @@ const EditPropertiesComponent = ({
                       </label>
                     </div>
                   )}
-                  <div>
-                    <label>
-                      Field Description:
-                      <textarea
-                        name="description"
-                        value={updatedItem.description || ""}
-                        onChange={handleChange}
-                        style={textboxStyle}
-                      />
-                    </label>
-                  </div>
-                  <div className="m-t-20 p-l-0">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={isUpdatedItemRequired}
-                        name="required"
-                        onChange={handleCheckChange}
-                      />
-                      Required
-                    </label>
-                  </div>
+
+                  {/* List Items */}
+
                   {["RADIOGROUP", "SELECTDROPDOWN", "CHECKLIST"].includes(
                     selectedControl.controlName
                   ) && (
@@ -225,6 +232,81 @@ const EditPropertiesComponent = ({
                       />
                     </>
                   )}
+                  {/* Min date Max data */}
+
+                  {["DATEFIELD"].includes(selectedControl.controlName) && (
+                    <>
+                      <div>
+                        <label>
+                          Min Date:
+                          <input
+                            type="date"
+                            name="min"
+                            value={updatedItem?.min || ""}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                          />
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          Max Date:
+                          <input
+                            type="date"
+                            name="max"
+                            value={updatedItem?.max || ""}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                          />
+                        </label>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Min Max Characters */}
+                  {["INPUTMULTILINE"].includes(selectedControl.controlName) && (
+                    <>
+                      <div>
+                        <label>
+                          Min Character:
+                          <input
+                            type="text"
+                            name="min"
+                            value={updatedItem?.min || ""}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                          />
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          Max Character :
+                          <input
+                            type="text"
+                            name="max"
+                            value={updatedItem.max || ""}
+                            onChange={handleChange}
+                            style={textboxStyle}
+                          />
+                        </label>
+                      </div>
+                    </>
+                  )}
+                  {/* Width */}
+                  <div>
+                    <label>
+                      Width :
+                      <input
+                        type="number"
+                        name="width"
+                        min={0}
+                        max={100}
+                        defaultValue={updatedItem?.width || 100}
+                        value={updatedItem?.width || 100}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
                   <input
                     type="submit"
                     value="Update Data"

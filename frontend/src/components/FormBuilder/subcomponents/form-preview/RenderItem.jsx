@@ -105,6 +105,11 @@ const RenderItem = (props) => {
         </div>
       );
 
+    case FormControlNames.EMAIL:
+      return <TextField {...props} />;
+    case FormControlNames.PHONE:
+      return <TextField {...props} />;
+
     case FormControlNames.MULTICHOICES:
       return <div>Multi-Choices Component Placeholder</div>;
 

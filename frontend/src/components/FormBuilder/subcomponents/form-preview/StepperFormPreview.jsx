@@ -26,23 +26,80 @@ const StepperFormPreview = (props) => {
 
     formLayoutComponents.forEach((step) => {
       step.children.forEach((field) => {
-        if (field.required) {
-          schema[field.id] = Yup.string()
-            .trim()
-            .required(`${field.labelName} is required`);
-        } else if (field.type === "email") {
-          schema[field.id] = Yup.string()
-            .email("Invalid email address")
-            .nullable();
-        } else if (field.type === "number") {
-          schema[field.id] = Yup.number()
-            .typeError(`${field.labelName} must be a number`)
-            .nullable();
-        } else {
-          schema[field.id] = Yup.string().nullable();
+        const { dataType, required, labelName, id, min, max } = field;
+
+        // Initialize the base validation rule
+        let validationRule;
+
+        switch (dataType) {
+          case "email":
+            validationRule = Yup.string().email("Invalid email address");
+            break;
+
+          case "phone":
+            validationRule = Yup.string()
+              .matches(
+                /^\d{10}$/,
+                `${labelName} must be a valid 10-digit phone number`
+              )
+              .nullable();
+            break;
+
+          case "date":
+            validationRule = Yup.date();
+            if (min) {
+              validationRule = validationRule.min(
+                new Date(min),
+                `${labelName} must be on or after ${min}`
+              );
+            }
+            if (max) {
+              validationRule = validationRule.max(
+                new Date(max),
+                `${labelName} must be on or before ${max}`
+              );
+            }
+            break;
+
+          case "string":
+          default:
+            validationRule = Yup.string().nullable();
+            break;
         }
+
+        // Add required validation if the field is marked as required
+        console.log("Required: ", required);
+        if (required) {
+          if (
+            dataType === "string" ||
+            dataType === "email" ||
+            dataType === "phone"
+          ) {
+            validationRule = validationRule.trim();
+          }
+          validationRule = validationRule.required(`${labelName} is required`);
+        }
+        if (dataType !== "date") {
+          if (min) {
+            validationRule = validationRule.min(
+              min,
+              `min ${min} character allowed `
+            );
+          }
+          if (max) {
+            validationRule = validationRule.max(
+              max,
+              `max ${min} character allowed `
+            );
+          }
+        }
+
+        // Add the rule to the schema
+        schema[id] = validationRule;
       });
     });
+
+    // Return the full Yup validation schema
     return Yup.object().shape(schema);
   };
 

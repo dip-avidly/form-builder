@@ -189,6 +189,40 @@ const renderItem = (item) => {
         </div>
       );
 
+    case FormControlNames.EMAIL:
+      return (
+        <div>
+          <input
+            type={item.dataType || "text"}
+            placeholder={item.placeholder}
+            className="form-control"
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+            disabled
+          />
+        </div>
+      );
+
+    case FormControlNames.PHONE:
+      return (
+        <div>
+          <input
+            type={item.dataType || "text"}
+            placeholder={item.placeholder}
+            className="form-control"
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+            disabled
+          />
+        </div>
+      );
+
     default:
       return <div style={{ color: "red" }}>Unknown Control</div>;
   }
