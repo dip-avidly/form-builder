@@ -1,19 +1,14 @@
 import React from "react";
 
-export const DateField = ({ item, value, onChange }) => {
+export const DateField = ({ item, value, onChange, error }) => {
   return (
     <div>
       <input
         type="date"
         value={value || ""}
-        style={{
-          width: "100%",
-          padding: "10px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
         onChange={(e) => onChange(item.id, e.target.value)}
       />
+      {error && <div style={{ color: "red", fontSize: "12px" }}>{error}</div>}
     </div>
   );
 };

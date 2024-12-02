@@ -204,7 +204,7 @@ export const FormControlList = [
     itemType: FormItemTypes.CONTROL,
     icon: "fa fa-signature",
     required: false,
-    category: "other-elements",
+    category: "media-elements",
     containerId: "",
   },
   {

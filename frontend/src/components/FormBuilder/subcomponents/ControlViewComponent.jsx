@@ -5,8 +5,6 @@ import {
   FormItemTypes,
 } from "../../../utils/formBuilderUtils";
 
-import "../form-preview.scss";
-
 const selectedColor = "var(--primary)";
 const nonSelectedColor = "rgba(0,0,0,0.1)";
 
@@ -295,13 +293,8 @@ function ControlViewComponent(props) {
       <div className="control-header">
         <h5>{item.labelName + (item.required ? " *" : "")}</h5>
         <div className="control-actions">
-          <span style={{ cursor: "grab" }}>
-            <i className="fa fa-ellipsis-v"></i>
-            <i className="fa fa-ellipsis-v"></i>
-          </span>
-          <span onClick={handleDeleteControl}>
-            <i className="fa fa-trash"></i>
-          </span>
+          <span style={{ cursor: "grab" }}>Move Icon</span>
+          <span onClick={handleDeleteControl}>Delete</span>
         </div>
       </div>
       {item.description && <p>{item.description}</p>}

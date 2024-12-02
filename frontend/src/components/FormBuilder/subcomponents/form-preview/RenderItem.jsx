@@ -13,57 +13,35 @@ import { ImageUpload } from "../../../inputs/ImageUpload";
 import { Toggle } from "../../../inputs/Toggle";
 const RenderItem = (props) => {
   const { item, value, onChange, error } = props;
-  console.log('asdasdaerror 123 123123 1: ', error);
-  console.log('item.controlName: ', item.controlName);
   switch (item.controlName) {
     case FormControlNames.INPUTTEXTFIELD:
-      return (
-        <TextField {...props} />
-      );
+      return <TextField {...props} />;
 
     case FormControlNames.INPUTMULTILINE:
-      return (
-        <MultilineField {...props} />
-      );
+      return <MultilineField {...props} />;
 
     case FormControlNames.CHECKBOX:
-      return (
-        <Checkbox {...props} />
-      );
+      return <Checkbox {...props} />;
 
     case FormControlNames.RADIOGROUP:
-      return (
-        <RadioGroup {...props} />
-      );
+      return <RadioGroup {...props} />;
 
     case FormControlNames.SELECTDROPDOWN:
-      return (
-        <SelectDropdown {...props} />
-      );
+      return <SelectDropdown {...props} />;
 
     case FormControlNames.DATEFIELD:
-      return (
-        <DateField {...props} />
-      );
+      return <DateField {...props} />;
 
     case FormControlNames.TIMEFIELD:
-      return (
-        <TimeField {...props} />
-      );
+      return <TimeField {...props} />;
 
     case FormControlNames.FILEUPLOAD:
-      return (
-        <FileUpload {...props} />
-      );
+      return <FileUpload {...props} />;
     case FormControlNames.IMAGEUPLOAD:
-      return (
-        <ImageUpload {...props} />
-      );
+      return <ImageUpload {...props} />;
 
     case FormControlNames.TOGGLE:
-      return (
-        <Toggle />
-      );
+      return <Toggle />;
 
     case FormControlNames.CHECKLIST:
       return (
@@ -116,15 +94,6 @@ const RenderItem = (props) => {
             onClick={() => {
               item.signatureRef.clear(); // Clear signature
               onChange(item.id, ""); // Clear form value
-            }}
-            style={{
-              marginTop: "10px",
-              padding: "5px 10px",
-              backgroundColor: "#ff4d4f",
-              color: "#fff",
-              borderRadius: "4px",
-              border: "none",
-              cursor: "pointer",
             }}
           >
             Clear Signature

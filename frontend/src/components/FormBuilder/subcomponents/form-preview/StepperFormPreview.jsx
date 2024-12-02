@@ -2,7 +2,6 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import RenderItem from "./RenderItem";
-import "../../form-preview.scss";
 import axios from "axios";
 
 const previewWindowStyle = {
@@ -31,11 +30,11 @@ const StepperFormPreview = (props) => {
           schema[field.id] = Yup.string()
             .trim()
             .required(`${field.labelName} is required`);
-        } else if (field.type === 'email') {
+        } else if (field.type === "email") {
           schema[field.id] = Yup.string()
-            .email('Invalid email address')
+            .email("Invalid email address")
             .nullable();
-        } else if (field.type === 'number') {
+        } else if (field.type === "number") {
           schema[field.id] = Yup.number()
             .typeError(`${field.labelName} must be a number`)
             .nullable();
@@ -44,7 +43,6 @@ const StepperFormPreview = (props) => {
         }
       });
     });
-
     return Yup.object().shape(schema);
   };
 
@@ -57,7 +55,6 @@ const StepperFormPreview = (props) => {
   const isMobile = screenType === "mobile";
 
   const validationSchema = generateValidationSchema(formLayoutComponents); // Generate the schema dynamically
-
 
   return (
     <>
@@ -85,7 +82,7 @@ const StepperFormPreview = (props) => {
                   handleSubmit,
                   isSubmitting,
                 }) => {
-                  console.log('errors: ', errors);
+                  console.log("errors: ", errors);
                   return (
                     <form onSubmit={handleSubmit} style={{ minWidth: "100%" }}>
                       {formLayoutComponents.map((component, index) => (
@@ -96,7 +93,10 @@ const StepperFormPreview = (props) => {
                           </div>
 
                           {component.children.map((child) => (
-                            <div key={child.id} className="my-4">
+                            <div
+                              key={child.id}
+                              className="my-4 SingleComponent"
+                            >
                               <h5>
                                 {child.labelName + (child.required ? " *" : "")}
                               </h5>

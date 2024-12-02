@@ -10,17 +10,7 @@ export const ImageUpload = ({ item, onChange }) => {
         style={{ display: "none" }}
         onChange={(e) => onChange(item.id, e.target.files[0])}
       />
-      <label
-        htmlFor={item.controlName + item.id}
-        style={{
-          display: "inline-block",
-          padding: "10px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
+      <label htmlFor={item.controlName + item.id}>
         <i className="far fa-image"></i>
       </label>
     </div>

@@ -33,7 +33,6 @@ const FormPreviewPage = () => {
   }, [formId]);
 
   useEffect(() => {
-    console.log("id?.length: ", id?.length);
     if (id?.length > 0) {
       getDefaultValues();
     }
