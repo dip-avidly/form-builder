@@ -255,32 +255,39 @@ const StepperFormPreview = (props) => {
                             <p>{component.container.subHeading}</p>
                           </div>
 
-                          {component.children.map((child) => (
-                            <div
-                              key={child.id}
-                              className="my-4 SingleComponent"
-                            >
-                              <h5>
-                                {child.labelName + (child.required ? " *" : "")}
-                              </h5>
-                              {child.description !== "" ? (
-                                <div className="mt-1">
-                                  <p>{child.description}</p>
-                                </div>
-                              ) : null}
-                              <RenderItem
-                                item={child}
-                                value={values[child.id]}
-                                onChange={(fieldId, fieldValue) =>
-                                  handleChange({
-                                    target: { id: fieldId, value: fieldValue },
-                                  })
-                                }
-                                error={
-                                  errors[child.id] ? errors[child.id] : null
-                                }
-                              />
-                              {/* {errors[child.id] && touched[child.id] && (
+                          {component.children.map((child) => {
+                            return (
+                              <div
+                                key={child.id}
+                                className="my-4 SingleComponent"
+                              >
+                                {!child?.hideLabel && (
+                                  <h5>
+                                    {child.labelName +
+                                      (child.required ? " *" : "")}
+                                  </h5>
+                                )}
+                                {child.description !== "" ? (
+                                  <div className="mt-1">
+                                    <p>{child.description}</p>
+                                  </div>
+                                ) : null}
+                                <RenderItem
+                                  item={child}
+                                  value={values[child.id]}
+                                  onChange={(fieldId, fieldValue) =>
+                                    handleChange({
+                                      target: {
+                                        id: fieldId,
+                                        value: fieldValue,
+                                      },
+                                    })
+                                  }
+                                  error={
+                                    errors[child.id] ? errors[child.id] : null
+                                  }
+                                />
+                                {/* {errors[child.id] && touched[child.id] && (
                               <div
                                 style={{
                                   color: "red",
@@ -291,8 +298,9 @@ const StepperFormPreview = (props) => {
                                 {errors[child.id]}
                               </div>
                             )} */}
-                            </div>
-                          ))}
+                              </div>
+                            );
+                          })}
 
                           {/* Add a horizontal line between steps, except after the last step */}
                           {index < formLayoutComponents.length - 1 && (

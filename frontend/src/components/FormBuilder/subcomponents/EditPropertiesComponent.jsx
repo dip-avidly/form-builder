@@ -18,7 +18,6 @@ const EditPropertiesComponent = ({
 }) => {
   console.log("selectedControl2 342 34 234: ", selectedControl);
   const [updatedItem, setUpdatedItem] = useState({});
-  console.log("updatedItem123123123: ", updatedItem);
   const [isUpdatedItemRequired, setIsUpdatedItemRequired] = useState(false);
   const [moveControlObj, setMoveControlObj] = useState(null);
   const [controlsInContainer, setControlsInContainer] = useState(undefined);
@@ -347,8 +346,8 @@ const EditPropertiesComponent = ({
                       <input
                         type="checkbox"
                         name="hideLabel"
-                        className="toggle-switch"
-                        // defaultValue={updatedItem?.hideLabel || false}
+                        // className="toggle-switch"
+                        defaultValue={updatedItem?.hideLabel || false}
                         checked={updatedItem?.hideLabel}
                         onChange={handleSwitchChange}
                       />
