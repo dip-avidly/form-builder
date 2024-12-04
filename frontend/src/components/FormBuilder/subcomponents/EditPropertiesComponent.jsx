@@ -18,6 +18,7 @@ const EditPropertiesComponent = ({
 }) => {
   console.log("selectedControl2 342 34 234: ", selectedControl);
   const [updatedItem, setUpdatedItem] = useState({});
+  console.log("updatedItem123123123: ", updatedItem);
   const [isUpdatedItemRequired, setIsUpdatedItemRequired] = useState(false);
   const [moveControlObj, setMoveControlObj] = useState(null);
   const [controlsInContainer, setControlsInContainer] = useState(undefined);
@@ -42,6 +43,7 @@ const EditPropertiesComponent = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log("name, value: ", name, value);
     setUpdatedItem((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -70,6 +72,11 @@ const EditPropertiesComponent = ({
     if (name === "required") {
       setIsUpdatedItemRequired(checked);
     }
+    setUpdatedItem((prevState) => ({ ...prevState, [name]: checked }));
+  };
+  const handleSwitchChange = (e) => {
+    const { name, checked } = e.target;
+    console.log("name, value: ", name, checked);
     setUpdatedItem((prevState) => ({ ...prevState, [name]: checked }));
   };
 
@@ -333,6 +340,17 @@ const EditPropertiesComponent = ({
                         defaultValue={updatedItem?.width || 100}
                         value={updatedItem?.width || 100}
                         onChange={handleChange}
+                      />
+                    </label>
+                    <label>
+                      Hide Label :
+                      <input
+                        type="checkbox"
+                        name="hideLabel"
+                        className="toggle-switch"
+                        // defaultValue={updatedItem?.hideLabel || false}
+                        checked={updatedItem?.hideLabel}
+                        onChange={handleSwitchChange}
                       />
                     </label>
                   </div>

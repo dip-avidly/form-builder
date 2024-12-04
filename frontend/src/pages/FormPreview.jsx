@@ -79,6 +79,7 @@ const FormPreviewPage = () => {
             screenType={"mobile"}
             formLayoutComponents={template?.formLayoutComponents}
             formId={formId}
+            id={id}
             defaultValues={defaultData}
           />
         </div>

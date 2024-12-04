@@ -1,11 +1,11 @@
 import React from "react";
 
 export const TextField = ({ item, value, onChange, error }) => {
-  console.log("asdasd item.dataType: ", item.dataType, error);
   return (
-    <div>
+    <div style={{ width: `${item?.width || 100}%` }}>
       <input
         type={"text"}
+        style={{ width: `${item?.width || 100}%` }}
         placeholder={item.placeholder}
         value={value || ""}
         onChange={(e) => onChange(item.id, e.target.value)}

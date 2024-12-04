@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FormControlNames } from "../../../../utils/formBuilderUtils";
 import SignatureCanvas from "react-signature-canvas";
 import { TextField } from "../../../inputs/TextField";
@@ -11,6 +11,7 @@ import { TimeField } from "../../../inputs/TimeField";
 import { FileUpload } from "../../../inputs/FileUpload";
 import { ImageUpload } from "../../../inputs/ImageUpload";
 import { Toggle } from "../../../inputs/Toggle";
+import axios from "axios";
 const RenderItem = (props) => {
   const { item, value, onChange, error } = props;
   switch (item.controlName) {
@@ -45,7 +46,7 @@ const RenderItem = (props) => {
 
     case FormControlNames.CHECKLIST:
       return (
-        <div>
+        <div style={{ width: `${item?.width || 100}%` }}>
           {item.items?.map((i) => (
             <label key={i.value}>
               <input
@@ -68,11 +69,42 @@ const RenderItem = (props) => {
         </div>
       );
     case FormControlNames.SIGNATURE:
+      const signatureRef = useRef(null);
+      const defaultSignature = value?.length > 0 ? value[0]?.url : undefined;
+
+      // Set default signature image when component mounts
+      useEffect(() => {
+        defaultPublicUrl(defaultSignature);
+      }, [defaultSignature]);
+
+      const defaultPublicUrl = async (defaultSignature) => {
+        if (signatureRef.current && defaultSignature) {
+          const canvas = signatureRef.current.getCanvas(); // Get the raw canvas element
+          const ctx = canvas.getContext("2d"); // Get the 2D context of the canvas
+          const img = new Image();
+          img.crossOrigin = "http://localhost:3000"; // Set cross-origin to anonymous
+          if (defaultSignature) {
+            const { data } = await axios.post(
+              "http://localhost:3000/get-public-url",
+              { url: defaultSignature }
+            );
+            img.src = data?.data; // URL of the image from S3
+            img.onload = () => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear any existing signature
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw the default image onto the canvas
+            };
+            img.onerror = (error) => {
+              console.error("Image loading error:", error);
+            };
+          }
+        }
+      };
+
       return (
-        <div>
+        <div style={{ width: `${item?.width || 100}%` }}>
           <SignatureCanvas
-            ref={(ref) => (item.signatureRef = ref)} // Store ref for clearing or getting data
-            penColor="black" // Customize pen color
+            ref={signatureRef}
+            penColor="black"
             canvasProps={{
               width: 500,
               height: 200,
@@ -83,18 +115,24 @@ const RenderItem = (props) => {
               },
             }}
             onEnd={() => {
-              // Capture data on signature complete
-              const signatureData = item.signatureRef
-                .getTrimmedCanvas()
-                .toDataURL("image/png");
-              onChange(item.id, signatureData);
+              const canvas = signatureRef.current.getTrimmedCanvas();
+              canvas.toBlob((blob) => {
+                const signatureFile = new File(
+                  [blob],
+                  `${item.id}_signature.png`,
+                  {
+                    type: "image/png",
+                  }
+                );
+                onChange(item.id, [signatureFile]);
+              }, "image/png");
             }}
           />
           <button
             type="button"
             onClick={() => {
-              item.signatureRef.clear(); // Clear signature
-              onChange(item.id, ""); // Clear form value
+              signatureRef.current.clear();
+              onChange(item.id, "");
             }}
           >
             Clear Signature

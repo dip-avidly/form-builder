@@ -18,9 +18,10 @@ const previewWindowStyle = {
 };
 
 const StepperFormPreview = (props) => {
-  const { formLayoutComponents, screenType, defaultValues, formId } = props;
+  const { formLayoutComponents, screenType, defaultValues, formId, id } = props;
 
   const initialValues = { ...defaultValues }; // Populate default values based on the response object
+  console.log("initialValues: ", initialValues);
   const generateValidationSchema = (formLayoutComponents) => {
     const schema = {};
 
@@ -36,6 +37,7 @@ const StepperFormPreview = (props) => {
           maxFile,
           maxSize,
         } = field;
+        console.log(" all labelName: ", dataType, labelName);
 
         // Initialize the base validation rule
         let validationRule;
@@ -131,11 +133,86 @@ const StepperFormPreview = (props) => {
     // Return the full Yup validation schema
     return Yup.object().shape(schema);
   };
+  function findDeletedImagesDynamic(currentValue, initialValue) {
+    const deletedImages = [];
 
-  const handleSubmit = async (value) => {
-    await axios.post(`http://localhost:3000/form-entry/${formId}`, {
-      data: value,
-    });
+    for (const key in initialValue) {
+      if (
+        Array.isArray(initialValue[key]) &&
+        !(currentValue[key] instanceof File)
+      ) {
+        const initialImages = initialValue[key]?.filter((item) => item.url);
+        const currentImages = (currentValue[key] || [])?.filter(
+          (item) => item.url
+        );
+
+        if (initialImages.length > 0) {
+          // Extract URLs for comparison
+          const currentImageUrls = currentImages.map((image) => image.url);
+          const initialImageUrls = initialImages.map((image) => image.url);
+
+          // Find deleted images for this key
+          const deletedForKey = initialImages.filter(
+            (image) => !currentImageUrls.includes(image.url)
+          );
+          if (deletedForKey.length > 0) {
+            console.log("deletedForKey:2 34234 ", deletedForKey);
+            deletedImages.push(...deletedForKey);
+          }
+        }
+      }
+    }
+
+    console.log("deletedImages:1 23123123 ", deletedImages);
+    return deletedImages;
+  }
+  const handleSubmit = async (values) => {
+    try {
+      // Create a new FormData instance
+      const formData = new FormData();
+
+      // Append all values from the `values` object
+      console.log("values1 2312 3123123 123: ", values);
+      for (const key in values) {
+        if (values.hasOwnProperty(key)) {
+          const value = values[key];
+
+          if (value instanceof File || value instanceof Blob) {
+            // Single file
+            formData.append(key, value);
+          } else if (Array.isArray(value)) {
+            // Array of files
+            value
+              ?.filter((item) => item instanceof File || item instanceof Blob)
+              .forEach((file) => {
+                /*  */
+                formData.append(key, file); // Append each file
+              });
+          } else {
+            // Other types (string, numbers, etc.)
+            formData.append(key, value);
+          }
+        }
+      }
+
+      // Handle deleted files
+      const deleteFiles = findDeletedImagesDynamic(values, initialValues);
+      formData.append("deleteFiles123123123", JSON.stringify(deleteFiles));
+      // Send the POST request
+      const response = await axios.post(
+        `http://localhost:3000/form-entry/${formId}${id ? `?id=${id}` : ``}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Ensure correct content type
+          },
+        }
+      );
+
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const isMobile = screenType === "mobile";

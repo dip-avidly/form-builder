@@ -2,7 +2,7 @@ import React from "react";
 
 export const DateField = ({ item, value, onChange, error }) => {
   return (
-    <div>
+    <div style={{ width: `${item?.width || 100}%` }}>
       <input
         type="date"
         value={value || ""}

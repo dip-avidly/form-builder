@@ -2,7 +2,7 @@ import React from "react";
 
 export const SelectDropdown = ({ item, value, onChange, error }) => {
   return (
-    <div>
+    <div style={{ width: `${item?.width || 100}%` }}>
       <select
         value={value || ""}
         defaultValue={value || undefined}

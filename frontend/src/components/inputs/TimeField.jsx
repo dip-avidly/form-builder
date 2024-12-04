@@ -2,7 +2,7 @@ import React from "react";
 
 export const TimeField = ({ item, value, onChange, error }) => {
   return (
-    <div>
+    <div style={{ width: `${item?.width || 100}%` }}>
       <input
         type="time"
         value={value || ""}

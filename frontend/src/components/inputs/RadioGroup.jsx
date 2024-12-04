@@ -2,7 +2,7 @@ import React from "react";
 
 export const RadioGroup = ({ item, value, onChange, error }) => {
   return (
-    <div>
+    <div style={{ width: `${item?.width || 100}%` }}>
       {item.items?.map((i) => (
         <label key={i.value} style={{ marginRight: "10px" }}>
           <input
@@ -15,9 +15,7 @@ export const RadioGroup = ({ item, value, onChange, error }) => {
           {i.label}
         </label>
       ))}
-      {error && (
-        <div style={{ color: "red", fontSize: "12px" }}>{error}</div>
-      )}
+      {error && <div style={{ color: "red", fontSize: "12px" }}>{error}</div>}
     </div>
   );
 };

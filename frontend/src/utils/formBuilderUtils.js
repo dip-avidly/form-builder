@@ -251,6 +251,7 @@ export const FormControlList = [
     description: "Some Description about the field",
     labelName: "Label for Signature",
     itemType: FormItemTypes.CONTROL,
+    dataType: FormTextDataTypes.FILE,
     icon: "fa fa-signature",
     required: false,
     category: "media-elements",
